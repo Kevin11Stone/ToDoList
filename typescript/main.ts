@@ -13,6 +13,8 @@ class ToDoItem {
     //subTasks:Array<ToDoItem>;
 
 }
+
+
 /*
 let testItem = new ToDoItem();
 testItem.title = "Teach CPW 203"
@@ -32,7 +34,23 @@ if (testItem.isComplete) {
 window.onload = function() {
     let addBtn = <HTMLElement>document.querySelector("#create-item > button");
     addBtn.onclick = processNewItem;
+
+    // wire up Read Item button upon page download
+    let readItemBtn = <HTMLElement>document.querySelector("#read-item > button");
+    readItemBtn.onclick = readItem;
 }
+
+
+
+const itemKey:string = "todo";
+function readItem() {
+    // get item from storage and then display it
+    // read string and determine if it is of JSON format
+    
+    let item:ToDoItem = JSON.parse(localStorage.getItem(itemKey));
+    alert(item.title + " " + item.description);
+}
+
 
 
 function processNewItem() {
@@ -67,7 +85,7 @@ function clearForm() {
     // reset select list
     let urgencyList = (<HTMLSelectElement>document.querySelector("#urgency"));
     urgencyList.selectedIndex = 0;
-    
+
 
 }
 
@@ -86,8 +104,10 @@ function saveItem(item:ToDoItem):void {
 
     // ensure user can use local storage
     if(typeof(Storage) !== "undefined") {
-        localStorage.setItem("todo", data);
+        localStorage.setItem(itemKey, data);
     }
+
+
 }
 
 
