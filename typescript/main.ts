@@ -58,9 +58,48 @@ function processNewItem() {
     saveItem(item);
     notifyUser();
     clearForm();
+    displayToDo(item);
+
 }
 
 
+function displayToDo(item:ToDoItem) {
+    let todoList = document.getElementById("todo-list");
+   
+    // create <p> element and inject title
+    let itemPar = document.createElement("p");
+    itemPar.innerText = item.title;
+    itemPar.onclick = togggleItemComplete;
+
+    // set custom attribute
+    itemPar.setAttribute("data-desc", item.description);
+
+
+    // add <p> (itemPar) to <div> element
+    todoList.appendChild(itemPar);
+}
+
+
+
+function togggleItemComplete() {
+    let currItem:HTMLElement = this;
+    // need to create "completed" CSS class
+    currItem.classList.toggle("completed");
+
+    let title = currItem.innerText;
+    // grab custom attribute from displayToDo function above
+    let desc = currItem.getAttribute("data-desc");
+
+    alert("You completed " + title + ": " + desc)
+}
+
+
+
+
+
+/**
+ * Displays an alert to user
+ */
 function notifyUser() {
     alert("Your item was successfully saved");
 }
@@ -134,4 +173,6 @@ function getItemFromForm():ToDoItem {
     item.urgency = urgencyElement.options[urgencyElement.selectedIndex].text;
 
     return item;
+
+
 }

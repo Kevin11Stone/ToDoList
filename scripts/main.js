@@ -19,6 +19,22 @@ function processNewItem() {
     saveItem(item);
     notifyUser();
     clearForm();
+    displayToDo(item);
+}
+function displayToDo(item) {
+    var todoList = document.getElementById("todo-list");
+    var itemPar = document.createElement("p");
+    itemPar.innerText = item.title;
+    itemPar.onclick = togggleItemComplete;
+    itemPar.setAttribute("data-desc", item.description);
+    todoList.appendChild(itemPar);
+}
+function togggleItemComplete() {
+    var currItem = this;
+    currItem.classList.toggle("completed");
+    var title = currItem.innerText;
+    var desc = currItem.getAttribute("data-desc");
+    alert("You completed " + title + ": " + desc);
 }
 function notifyUser() {
     alert("Your item was successfully saved");
