@@ -12,7 +12,10 @@ window.onload = function () {
 var itemKey = "todo";
 function readItem() {
     var item = JSON.parse(localStorage.getItem(itemKey));
-    alert(item.title + " " + item.description);
+    alert("Title: " + item.title + "\n" + "Description: " + item.description);
+    var array = [];
+    array.push(item.title);
+    console.log(array.join(", "));
 }
 function processNewItem() {
     var item = getItemFromForm();
@@ -26,18 +29,33 @@ function displayToDo(item) {
     var itemPar = document.createElement("p");
     itemPar.innerText = item.title;
     itemPar.onclick = togggleItemComplete;
+    itemPar.ondblclick = markComplete(item.title);
     itemPar.setAttribute("data-desc", item.description);
     todoList.appendChild(itemPar);
+    var labelList = document.getElementById("notCompletedLabel");
+    labelList.innerText = item.title + " = not done! \n Click on item to display details \n and mark as complete: ";
 }
 function togggleItemComplete() {
     var currItem = this;
     currItem.classList.toggle("completed");
     var title = currItem.innerText;
     var desc = currItem.getAttribute("data-desc");
-    alert("You completed " + title + ": " + desc);
+    var labelList = document.getElementById("labelList");
+    labelList.classList.toggle("completed");
+    var clearLabel = document.getElementById("notCompletedLabel");
+    clearLabel.classList.toggle("notCompleted");
+    labelList.innerText = currItem.textContent + " = Completed!";
+    var descriptionDiv = document.getElementById("descriptionDiv");
+    descriptionDiv.innerText = title + " Details: \n" + desc;
+    descriptionDiv.classList.toggle("completed");
+}
+function markComplete(titleOfTask) {
+    var labelList = document.getElementById("labelList");
+    if (labelList.innerText = titleOfTask + " = Completed!") {
+        labelList.innerText = titleOfTask + " = Not Completed!";
+    }
 }
 function notifyUser() {
-    alert("Your item was successfully saved");
 }
 function clearForm() {
     var textElements = document.querySelectorAll("input[type = text], textarea");

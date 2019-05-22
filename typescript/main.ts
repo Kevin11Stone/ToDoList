@@ -48,7 +48,11 @@ function readItem() {
     // read string and determine if it is of JSON format
     
     let item:ToDoItem = JSON.parse(localStorage.getItem(itemKey));
-    alert(item.title + " " + item.description);
+    alert("Title: " + item.title + "\n" + "Description: " + item.description);
+
+    let array:string[] =[];
+    array.push(item.title);
+    console.log(array.join(", "));
 }
 
 
@@ -70,28 +74,61 @@ function displayToDo(item:ToDoItem) {
     let itemPar = document.createElement("p");
     itemPar.innerText = item.title;
     itemPar.onclick = togggleItemComplete;
-
+    itemPar.ondblclick = markComplete(item.title);
     // set custom attribute
     itemPar.setAttribute("data-desc", item.description);
 
 
     // add <p> (itemPar) to <div> element
     todoList.appendChild(itemPar);
+
+    let labelList = document.getElementById("notCompletedLabel");
+    labelList.innerText = item.title + " = not done! \n Click on item to display details \n and mark as complete: "
+
+    
 }
 
 
 
 function togggleItemComplete() {
     let currItem:HTMLElement = this;
-    // need to create "completed" CSS class
+    // need to create "completed" CSS class  
     currItem.classList.toggle("completed");
 
     let title = currItem.innerText;
     // grab custom attribute from displayToDo function above
     let desc = currItem.getAttribute("data-desc");
 
-    alert("You completed " + title + ": " + desc)
+    let labelList = document.getElementById("labelList");
+    labelList.classList.toggle("completed");
+
+    let clearLabel = document.getElementById("notCompletedLabel");
+    clearLabel.classList.toggle("notCompleted");
+
+
+
+    labelList.innerText = currItem.textContent + " = Completed!"
+
+    let descriptionDiv = document.getElementById("descriptionDiv");
+    descriptionDiv.innerText = title + " Details: \n" + desc;
+    descriptionDiv.classList.toggle("completed");
+  
+    //descriptionDiv.innerText = title + "\n Not Completed!";
+    //alert("You completed " + title + ": " + desc);
 }
+
+
+
+function  markComplete(titleOfTask:string):any {
+    let labelList= document.getElementById("labelList");
+    
+    if (labelList.innerText = titleOfTask + " = Completed!" ) {
+        labelList.innerText = titleOfTask + " = Not Completed!"
+        
+    }
+    
+}
+
 
 
 
@@ -101,7 +138,7 @@ function togggleItemComplete() {
  * Displays an alert to user
  */
 function notifyUser() {
-    alert("Your item was successfully saved");
+    //alert("Your item was successfully saved");
 }
 
 

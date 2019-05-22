@@ -11,7 +11,29 @@ div#todo-list > p, p.completed {
     margin-right: .75em;
 }
 
+#labelList.completed {
+    color: white;
+}
+
+#notCompletedLabel.completed {
+    color: black;
+}
+#notCompletedLabel.notCompleted {
+    color: white;
+}
+
+#descriptionDiv.completed {
+    color: black;
+}
+#descriptionDiv.notCompleted {
+    color: white !important;
+}
+
 p.completed {
     text-decoration: line-through;
     background-color: lightgreen !important;
+}
+
+body {
+    margin: 20px !important;
 }
